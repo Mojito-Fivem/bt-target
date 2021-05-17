@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
     TriggerEvent("chat:removeSuggestion", "/-playerTarget")
 end)
 
-if Config.ESX then
+if Config.ESX or Config.QBCore then
     Citizen.CreateThread(function()
         if Config.ESX and not Config.QBCore then
             while ESX == nil do
