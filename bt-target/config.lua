@@ -1,6 +1,7 @@
 Config = {}
 
 Config.ESX = true
+Config.QBCore = false
 
 
 -- Return an object in the format
