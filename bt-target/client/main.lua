@@ -12,27 +12,40 @@ end)
 
 if Config.ESX then
     Citizen.CreateThread(function()
-        while ESX == nil do
-            TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-            Citizen.Wait(0)
+        if Config.ESX and not Config.QBCore then
+            while ESX == nil do
+                TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+                Citizen.Wait(0)
+            end
+
+            while ESX.GetPlayerData().job == nil do
+            Citizen.Wait(10)
+            end
+
+            PlayerJob = ESX.GetPlayerData().job
+
+            RegisterNetEvent('esx:setJob')
+            AddEventHandler('esx:setJob', function(job)
+                PlayerJob = job
+            end)
+        elseif Config.QBCore and not Config.ESX then
+            while QBCore == nil do
+                TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
+                Citizen.Wait(0)
+            end
+
+            PlayerJob = nil
+            QBCore.Functions.GetPlayerData(function(PlayerData) PlayerJob = PlayerData.job end)
         end
-
-        while ESX.GetPlayerData().job == nil do
-	    Citizen.Wait(10)
-        end
-
-        PlayerJob = ESX.GetPlayerData().job
-
-        RegisterNetEvent('esx:setJob')
-	AddEventHandler('esx:setJob', function(job)
-	    PlayerJob = job
-	end)
     end)
 else
     PlayerJob = Config.NonEsxJob()
 end
 
 function playerTargetEnable()
+    if Config.QBCore and not Config.ESX then
+        QBCore.Functions.GetPlayerData(function(PlayerData) PlayerJob = PlayerData.job end)
+    end
     if success then return end
     if IsPedArmed(PlayerPedId(), 6) then return end
     local nearestVehicle = GetNearestVehicle()
