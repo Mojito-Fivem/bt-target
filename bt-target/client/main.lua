@@ -58,6 +58,7 @@ function playerTargetEnable()
 
                                 for _, option in pairs(Models[_]["options"]) do
                                     if option.shouldShow == nil or option.shouldShow() then
+                                        option.shouldShow = nil
                                         for _, job in pairs(option.job) do
                                             if job == "all" or job == PlayerJob.name then
                                                 table.insert(NewOptions, option)
@@ -107,6 +108,7 @@ function playerTargetEnable()
 
                             for _, option in pairs(Bones[_]["options"]) do
                                 if option.shouldShow == nil or option.shouldShow() then
+                                    option.shouldShow = nil
                                     for _, job in pairs(option.job) do
                                         if job == "all" or job == PlayerJob.name then
                                             table.insert(NewOptions, option)
@@ -153,6 +155,7 @@ function playerTargetEnable()
 
                         for _, option in pairs(Zones[_]["targetoptions"]["options"]) do
                             if option.shouldShow == nil or option.shouldShow() then
+                                option.shouldShow = nil
                                 for _, job in pairs(option.job) do
                                     if job == "all" or job == PlayerJob.name then
                                         table.insert(NewOptions, option)
