@@ -58,10 +58,11 @@ function playerTargetEnable()
 
                                 for _, option in pairs(Models[_]["options"]) do
                                     if option.shouldShow == nil or option.shouldShow() then
-                                        option.shouldShow = nil
                                         for _, job in pairs(option.job) do
                                             if job == "all" or job == PlayerJob.name then
-                                                table.insert(NewOptions, option)
+                                                option2 = ShallowCopy(option)
+                                                option2.shouldShow = nil
+                                                table.insert(NewOptions, option2)
                                             end
                                         end
                                     end
@@ -108,10 +109,11 @@ function playerTargetEnable()
 
                             for _, option in pairs(Bones[_]["options"]) do
                                 if option.shouldShow == nil or option.shouldShow() then
-                                    option.shouldShow = nil
                                     for _, job in pairs(option.job) do
                                         if job == "all" or job == PlayerJob.name then
-                                            table.insert(NewOptions, option)
+                                            option2 = ShallowCopy(option)
+                                            option2.shouldShow = nil
+                                            table.insert(NewOptions, option2)
                                         end
                                     end
                                 end
@@ -155,10 +157,11 @@ function playerTargetEnable()
 
                         for _, option in pairs(Zones[_]["targetoptions"]["options"]) do
                             if option.shouldShow == nil or option.shouldShow() then
-                                option.shouldShow = nil
                                 for _, job in pairs(option.job) do
                                     if job == "all" or job == PlayerJob.name then
-                                        table.insert(NewOptions, option)
+                                        option2 = ShallowCopy(option)
+                                        option2.shouldShow = nil
+                                        table.insert(NewOptions, option2)
                                     end
                                 end
                             end
@@ -339,6 +342,13 @@ function RemoveZone(name)
     Zones[name] = nil
 end
 
+function ShallowCopy (oldTable)
+    local newTable = {}
+    for k,v in pairs(oldTable) do
+        newTable[k] = v
+    end
+    return newTable
+end
 
 exports("AddCircleZone", AddCircleZone)
 
